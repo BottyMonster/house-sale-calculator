@@ -74,16 +74,6 @@ elif 0 <= remaining_cash <= 15000:
 else:
     st.markdown("### 😠 MARTA is angry — there’s not enough money after the deposit!")
 
-# Excel download section
-st.markdown("### 📥 Download Your Results")
-excel_data = to_excel(results)
-st.download_button(
-    label="⬇️ Download as Excel File",
-    data=excel_data,
-    file_name="ross_marta_house_calculator.xlsx",
-    mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-)
-
 # Footer
 st.markdown("---")
 st.caption("Made with ❤️ for Ross & Marta by ChatGPT + Streamlit")
