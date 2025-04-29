@@ -5,18 +5,18 @@ from io import BytesIO
 # Page settings
 st.set_page_config(page_title="Ross & Marta Wales Move", page_icon="🏡", layout="centered")
 
-# 🏞️ Wales photo with dark overlay
+# 🌄 Dark Wales background with lighter overlay
 st.markdown("""
     <style>
         body {
-            background-image: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1610394214304-f978ec6dfe8a?auto=format&fit=crop&w=1400&q=80');
+            background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://images.unsplash.com/photo-1610394214304-f978ec6dfe8a?auto=format&fit=crop&w=1400&q=80');
             background-size: cover;
             background-attachment: fixed;
             background-repeat: no-repeat;
             background-position: center;
         }
         .stApp {
-            background-color: rgba(0, 0, 0, 0.75);
+            background-color: rgba(0, 0, 0, 0.5);
             color: white;
             padding: 2rem;
             border-radius: 10px;
