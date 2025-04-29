@@ -35,3 +35,62 @@ st.markdown(
     f"""
     <div style='padding: 1em; border: 2px solid #ddd; border-radius: 10px; background-color: #f9f9f9'>
         <h3 style='color: {summary_color}'>💷 Remaining Cash After Everything: <strong>£{remaining_cash:,.0f}</strong></h3>
+    </div>
+    """, unsafe_allow_html=True
+)
+
+st.divider()
+
+# Detailed Results
+st.subheader("📊 Full Breakdown")
+
+results = {
+    "House Sale Price": f"£{sale_price:,.0f}",
+    "Less: Mortgage Remaining": f"-£{mortgage_balance:,.0f}",
+    "Equity After Mortgage": f"£{equity:,.0f}",
+    "Less: Debts & Fees": f"-£{debts_and_fees:,.0f}",
+    "Equity After Debts & Fees": f"£{after_debts:,.0f}",
+    "Less: Deposit for New House": f"-£{deposit_amount:,.0f}",
+    "Remaining Cash": f"£{remaining_cash:,.0f}",
+}
+
+# Show results in two columns
+colA, colB = st.columns(2)
+with colA:
+    for label, value in list(results.items())[:4]:
+        st.markdown(f"**{label}:** {value}")
+with colB:
+    for label, value in list(results.items())[4:]:
+        st.markdown(f"**{label}:** {value}")
+
+# Excel download function
+def to_excel(data_dict):
+    df = pd.DataFrame(data_dict.items(), columns=["Item", "Amount"])
+    output = BytesIO()
+    with pd.ExcelWriter(output, engine='xlsxwriter') as writer:
+        df.to_excel(writer, index=False, sheet_name="Results")
+    return output.getvalue()
+
+# Excel download button
+st.markdown("### 📥 Download Your Results")
+excel_data = to_excel(results)
+st.download_button(
+    label="⬇️ Download as Excel File",
+    data=excel_data,
+    file_name="ross_marta_house_calculator.xlsx",
+    mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+)
+
+# MARTA's mood
+st.markdown("### 🧠 MARTA's Mood:")
+
+if remaining_cash > 15000:
+    st.success("😊 MARTA is happy — you’re well set!")
+elif 0 <= remaining_cash <= 15000:
+    st.warning("😐 MARTA is not impressed — cutting it a bit close.")
+else:
+    st.error("😠 MARTA is angry — there’s not enough money after the deposit!")
+
+# Footer
+st.markdown("---")
+st.caption("Made with ❤️ for Ross & Marta by ChatGPT + Streamlit")
