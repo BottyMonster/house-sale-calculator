@@ -31,7 +31,7 @@ st.markdown("""
 
 # Title
 st.title("🏡 Ross & Marta Wales Move")
-st.markdown("Easily work out your equity and cash remaining when buying your new home.")
+st.markdown("Easily work out if life its worth living after the move to wales.")
 
 # 🔢 Input handling
 def parse_currency_input(label):
