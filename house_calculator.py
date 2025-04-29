@@ -5,6 +5,24 @@ from io import BytesIO
 # Page settings
 st.set_page_config(page_title="Ross & Marta Wales Move", page_icon="🏡", layout="centered")
 
+# 🌄 Add background styling
+st.markdown("""
+    <style>
+        body {
+            background-image: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1400&q=80');
+            background-size: cover;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+        .stApp {
+            background-color: rgba(255, 255, 255, 0.85);
+            padding: 2rem;
+            border-radius: 10px;
+        }
+    </style>
+""", unsafe_allow_html=True)
+
 # Title
 st.title("🏡 Ross & Marta Wales Move")
 st.markdown("Easily work out your equity and cash remaining when buying your new home.")
@@ -76,24 +94,6 @@ if all(x > 0 for x in [sale_price, mortgage_balance, debts_and_fees, deposit_amo
         st.markdown("### 😐 MARTA is not impressed — cutting it a bit close.")
     else:
         st.markdown("### 😠 MARTA is angry — there’s not enough money after the deposit!")
-
-    # Excel download section
-    st.markdown("### 📥 Download Your Results")
-    
-    def to_excel(data_dict):
-        df = pd.DataFrame(data_dict.items(), columns=["Item", "Amount"])
-        output = BytesIO()
-        with pd.ExcelWriter(output, engine='xlsxwriter') as writer:
-            df.to_excel(writer, index=False, sheet_name="Results")
-        return output.getvalue()
-    
-    excel_data = to_excel(results)
-    st.download_button(
-        label="⬇️ Download as Excel File",
-        data=excel_data,
-        file_name="ross_marta_house_calculator.xlsx",
-        mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-    )
 
 # Footer
 st.markdown("---")
