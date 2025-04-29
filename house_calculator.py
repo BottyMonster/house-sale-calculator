@@ -15,67 +15,87 @@ st.header("🔢 Enter Your Details")
 col1, col2 = st.columns(2)
 
 with col1:
-    sale_price = st.number_input("🏷️ Sale Price (£)", value=475000, step=1000, help="Expected sale price of your current house")
-    mortgage_balance = st.number_input("🏦 Mortgage Left (£)", value=298000, step=1000, help="Outstanding mortgage on your current house")
+    sale_price = st.number_input("🏷️ Sale Price (£)", min_value=0, step=1000, help="Expected sale price of your current house")
+    mortgage_balance = st.number_input("🏦 Mortgage Left (£)", min_value=0, step=1000, help="Outstanding mortgage on your current house")
 
 with col2:
-    debts_and_fees = st.number_input("💳 Debts & Legal Fees (£)", value=56000, step=1000, help="Total of debts, conveyancing fees, stamp duty etc.")
-    deposit_amount = st.number_input("💰 Deposit for New House (£)", value=80000, step=1000, help="Deposit you're putting down on the next house")
+    debts_and_fees = st.number_input("💳 Debts & Legal Fees (£)", min_value=0, step=1000, help="Total of debts, conveyancing fees, stamp duty etc.")
+    deposit_amount = st.number_input("💰 Deposit for New House (£)", min_value=0, step=1000, help="Deposit you're putting down on the next house")
 
-# Calculations
-equity = sale_price - mortgage_balance
-after_debts = equity - debts_and_fees
-remaining_cash = after_debts - deposit_amount
+# Only run calculations if all values are filled
+if all(x > 0 for x in [sale_price, mortgage_balance, debts_and_fees, deposit_amount]):
+    
+    # Calculations
+    equity = sale_price - mortgage_balance
+    after_debts = equity - debts_and_fees
+    remaining_cash = after_debts - deposit_amount
 
-# Summary block
-st.markdown("### 🧾 Summary")
+    # Summary block
+    st.markdown("### 🧾 Summary")
 
-summary_color = "green" if remaining_cash >= 0 else "red"
-st.markdown(
-    f"""
-    <div style='padding: 1em; border: 2px solid #ddd; border-radius: 10px; background-color: #f9f9f9'>
-        <h3 style='color: {summary_color}'>💷 Remaining Cash After Everything: <strong>£{remaining_cash:,.0f}</strong></h3>
-    </div>
-    """, unsafe_allow_html=True
-)
+    summary_color = "green" if remaining_cash >= 0 else "red"
+    st.markdown(
+        f"""
+        <div style='padding: 1em; border: 2px solid #ddd; border-radius: 10px; background-color: #f9f9f9'>
+            <h3 style='color: {summary_color}'>💷 Remaining Cash After Everything: <strong>£{remaining_cash:,.0f}</strong></h3>
+        </div>
+        """, unsafe_allow_html=True
+    )
 
-st.divider()
+    st.divider()
 
-# Detailed Results
-st.subheader("📊 Full Breakdown")
+    # Detailed Results
+    st.subheader("📊 Full Breakdown")
 
-results = {
-    "House Sale Price": f"£{sale_price:,.0f}",
-    "Less: Mortgage Remaining": f"-£{mortgage_balance:,.0f}",
-    "Equity After Mortgage": f"£{equity:,.0f}",
-    "Less: Debts & Fees": f"-£{debts_and_fees:,.0f}",
-    "Equity After Debts & Fees": f"£{after_debts:,.0f}",
-    "Less: Deposit for New House": f"-£{deposit_amount:,.0f}",
-    "Remaining Cash": f"£{remaining_cash:,.0f}",
-}
+    results = {
+        "House Sale Price": f"£{sale_price:,.0f}",
+        "Less: Mortgage Remaining": f"-£{mortgage_balance:,.0f}",
+        "Equity After Mortgage": f"£{equity:,.0f}",
+        "Less: Debts & Fees": f"-£{debts_and_fees:,.0f}",
+        "Equity After Debts & Fees": f"£{after_debts:,.0f}",
+        "Less: Deposit for New House": f"-£{deposit_amount:,.0f}",
+        "Remaining Cash": f"£{remaining_cash:,.0f}",
+    }
 
-# Show results in two columns
-colA, colB = st.columns(2)
-with colA:
-    for label, value in list(results.items())[:4]:
-        st.markdown(f"**{label}:** {value}")
-with colB:
-    for label, value in list(results.items())[4:]:
-        st.markdown(f"**{label}:** {value}")
+    # Show results in two columns
+    colA, colB = st.columns(2)
+    with colA:
+        for label, value in list(results.items())[:4]:
+            st.markdown(f"**{label}:** {value}")
+    with colB:
+        for label, value in list(results.items())[4:]:
+            st.markdown(f"**{label}:** {value}")
 
-# MARTA's Mood — Displayed before Excel download
-st.markdown("---")
-st.header("🧠 MARTA's Mood")
+    # MARTA's Mood
+    st.markdown("---")
+    st.header("🧠 MARTA's Mood")
 
-if remaining_cash > 15000:
-    st.markdown("### 😊 MARTA is happy — you're well set!")
-elif 0 <= remaining_cash <= 15000:
-    st.markdown("### 😐 MARTA is not impressed — cutting it a bit close.")
-else:
-    st.markdown("### 😠 MARTA is angry — there’s not enough money after the deposit!")
+    if remaining_cash > 15000:
+        st.markdown("### 😊 MARTA is happy — you're well set!")
+    elif 0 <= remaining_cash <= 15000:
+        st.markdown("### 😐 MARTA is not impressed — cutting it a bit close.")
+    else:
+        st.markdown("### 😠 MARTA is angry — there’s not enough money after the deposit!")
+
+    # Excel download section
+    st.markdown("### 📥 Download Your Results")
+    
+    def to_excel(data_dict):
+        df = pd.DataFrame(data_dict.items(), columns=["Item", "Amount"])
+        output = BytesIO()
+        with pd.ExcelWriter(output, engine='xlsxwriter') as writer:
+            df.to_excel(writer, index=False, sheet_name="Results")
+        return output.getvalue()
+    
+    excel_data = to_excel(results)
+    st.download_button(
+        label="⬇️ Download as Excel File",
+        data=excel_data,
+        file_name="ross_marta_house_calculator.xlsx",
+        mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    )
 
 # Footer
 st.markdown("---")
 st.caption("Made with ❤️ for Marta by Ross")
-
 
