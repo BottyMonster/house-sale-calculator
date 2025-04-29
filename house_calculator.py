@@ -1,5 +1,6 @@
 import streamlit as st
 import pandas as pd
+import re
 from io import BytesIO
 
 # Page settings
@@ -21,10 +22,7 @@ st.markdown("""
             padding: 2rem;
             border-radius: 10px;
         }
-        .css-1d391kg, .css-1v3fvcr {
-            color: white;
-        }
-        .stNumberInput input {
+        .stTextInput input {
             background-color: #222 !important;
             color: #fff !important;
         }
@@ -35,34 +33,38 @@ st.markdown("""
 st.title("🏡 Ross & Marta Wales Move")
 st.markdown("Easily work out your equity and cash remaining when buying your new home.")
 
+# 🔢 Input handling
+def parse_currency_input(label):
+    raw = st.text_input(label)
+    cleaned = re.sub(r"[^\d]", "", raw)  # Remove £, commas, etc.
+    if cleaned:
+        value = int(cleaned)
+        st.caption(f"💬 You entered: £{value:,.0f}")
+        return value
+    else:
+        return 0
+
 st.header("🔢 Enter Your Details")
 
 col1, col2 = st.columns(2)
 
 with col1:
-    sale_price = st.number_input("🏷️ Sale Price", min_value=0, step=1000, format="%d")
-    st.caption(f"💬 You entered: £{sale_price:,.0f}")
-
-    mortgage_balance = st.number_input("🏦 Mortgage Left", min_value=0, step=1000, format="%d")
-    st.caption(f"💬 You entered: £{mortgage_balance:,.0f}")
+    sale_price = parse_currency_input("🏷️ Sale Price")
+    mortgage_balance = parse_currency_input("🏦 Mortgage Left")
 
 with col2:
-    debts_and_fees = st.number_input("💳 Debts & Legal Fees", min_value=0, step=1000, format="%d")
-    st.caption(f"💬 You entered: £{debts_and_fees:,.0f}")
+    debts_and_fees = parse_currency_input("💳 Debts & Legal Fees")
+    deposit_amount = parse_currency_input("💰 Deposit for New House")
 
-    deposit_amount = st.number_input("💰 Deposit for New House", min_value=0, step=1000, format="%d")
-    st.caption(f"💬 You entered: £{deposit_amount:,.0f}")
-
-
-# Only run calculations if all values are filled
+# Only run calculations if all values are present
 if all(x > 0 for x in [sale_price, mortgage_balance, debts_and_fees, deposit_amount]):
-    
-    # Calculations
+
+    # 💰 Calculations
     equity = sale_price - mortgage_balance
     after_debts = equity - debts_and_fees
     remaining_cash = after_debts - deposit_amount
 
-    # Summary block
+    # Summary
     st.markdown("### 🧾 Summary")
 
     summary_color = "#00ff88" if remaining_cash >= 0 else "#ff4444"
@@ -76,7 +78,7 @@ if all(x > 0 for x in [sale_price, mortgage_balance, debts_and_fees, deposit_amo
 
     st.divider()
 
-    # Detailed Results
+    # Breakdown
     st.subheader("📊 Full Breakdown")
 
     results = {
@@ -89,7 +91,6 @@ if all(x > 0 for x in [sale_price, mortgage_balance, debts_and_fees, deposit_amo
         "Remaining Cash": f"£{remaining_cash:,.0f}",
     }
 
-    # Show results in two columns
     colA, colB = st.columns(2)
     with colA:
         for label, value in list(results.items())[:4]:
