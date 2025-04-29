@@ -5,20 +5,28 @@ from io import BytesIO
 # Page settings
 st.set_page_config(page_title="Ross & Marta Wales Move", page_icon="🏡", layout="centered")
 
-# 🌄 Add background styling
+# 🌌 Add dark background styling
 st.markdown("""
     <style>
         body {
-            background-image: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1400&q=80');
+            background-image: url('https://images.unsplash.com/photo-1607083203023-8ef4e4411dfb?auto=format&fit=crop&w=1400&q=80');
             background-size: cover;
             background-attachment: fixed;
             background-repeat: no-repeat;
             background-position: center;
         }
         .stApp {
-            background-color: rgba(255, 255, 255, 0.85);
+            background-color: rgba(0, 0, 0, 0.75);  /* Dark overlay */
+            color: white;
             padding: 2rem;
             border-radius: 10px;
+        }
+        .css-1d391kg, .css-1v3fvcr {
+            color: white;
+        }
+        .stNumberInput input {
+            background-color: #222 !important;
+            color: #fff !important;
         }
     </style>
 """, unsafe_allow_html=True)
@@ -51,10 +59,10 @@ if all(x > 0 for x in [sale_price, mortgage_balance, debts_and_fees, deposit_amo
     # Summary block
     st.markdown("### 🧾 Summary")
 
-    summary_color = "green" if remaining_cash >= 0 else "red"
+    summary_color = "#00ff88" if remaining_cash >= 0 else "#ff4444"
     st.markdown(
         f"""
-        <div style='padding: 1em; border: 2px solid #ddd; border-radius: 10px; background-color: #f9f9f9'>
+        <div style='padding: 1em; border: 2px solid #888; border-radius: 10px; background-color: rgba(255,255,255,0.1);'>
             <h3 style='color: {summary_color}'>💷 Remaining Cash After Everything: <strong>£{remaining_cash:,.0f}</strong></h3>
         </div>
         """, unsafe_allow_html=True
