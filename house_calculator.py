@@ -30,10 +30,10 @@ st.markdown("""
 
 # Title
 st.title("🏡 Ross & Marta Wales 🐉 Move")
-st.markdown("Easily work out your equity and cash remaining when buying your new home.")
+st.markdown("Easily work out if your life is worth living after the big move.")
 
 # 🔢 Input section
-st.header("🔢 Enter Your Details")
+st.header("🔢 Enter the moolars")
 
 col1, col2 = st.columns(2)
 
