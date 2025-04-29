@@ -49,12 +49,18 @@ st.header("🔢 Enter Your Details")
 col1, col2 = st.columns(2)
 
 with col1:
-    sale_price = parse_currency_input("🏷️ Sale Price")
-    mortgage_balance = parse_currency_input("🏦 Mortgage Left")
+    sale_price = st.number_input("🏷️ Sale Price", min_value=0, step=1000, format="%d")
+    st.caption(f"💬 You entered: £{sale_price:,.0f}")
+
+    mortgage_balance = st.number_input("🏦 Mortgage Left", min_value=0, step=1000, format="%d")
+    st.caption(f"💬 You entered: £{mortgage_balance:,.0f}")
 
 with col2:
-    debts_and_fees = parse_currency_input("💳 Debts & Legal Fees")
-    deposit_amount = parse_currency_input("💰 Deposit for New House")
+    debts_and_fees = st.number_input("💳 Debts & Legal Fees", min_value=0, step=1000, format="%d")
+    st.caption(f"💬 You entered: £{debts_and_fees:,.0f}")
+
+    deposit_amount = st.number_input("💰 Deposit for New House", min_value=0, step=1000, format="%d")
+    st.caption(f"💬 You entered: £{deposit_amount:,.0f}")
 
 # Only run calculations if all values are present
 if all(x > 0 for x in [sale_price, mortgage_balance, debts_and_fees, deposit_amount]):
