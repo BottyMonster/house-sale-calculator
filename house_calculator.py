@@ -63,7 +63,7 @@ with colB:
     for label, value in list(results.items())[4:]:
         st.markdown(f"**{label}:** {value}")
 
-# MARTA's Mood — Always Visible
+# MARTA's Mood — Displayed before Excel download
 st.markdown("---")
 st.header("🧠 MARTA's Mood")
 
@@ -74,15 +74,7 @@ elif 0 <= remaining_cash <= 15000:
 else:
     st.markdown("### 😠 MARTA is angry — there’s not enough money after the deposit!")
 
-# Excel download function
-def to_excel(data_dict):
-    df = pd.DataFrame(data_dict.items(), columns=["Item", "Amount"])
-    output = BytesIO()
-    with pd.ExcelWriter(output, engine='xlsxwriter') as writer:
-        df.to_excel(writer, index=False, sheet_name="Results")
-    return output.getvalue()
-
-# Excel download button
+# Excel download section
 st.markdown("### 📥 Download Your Results")
 excel_data = to_excel(results)
 st.download_button(
@@ -95,4 +87,5 @@ st.download_button(
 # Footer
 st.markdown("---")
 st.caption("Made with ❤️ for Ross & Marta by ChatGPT + Streamlit")
+
 
