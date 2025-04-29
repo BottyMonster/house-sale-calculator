@@ -41,12 +41,18 @@ st.header("🔢 Enter Your Details")
 col1, col2 = st.columns(2)
 
 with col1:
-    sale_price = st.number_input("🏷️ Sale Price (£)", min_value=0, step=1000, help="Expected sale price of your current house")
-    mortgage_balance = st.number_input("🏦 Mortgage Left (£)", min_value=0, step=1000, help="Outstanding mortgage on your current house")
+    sale_price = st.number_input("🏷️ Sale Price", min_value=0, step=1000)
+    st.caption(f"💬 You entered: £{sale_price:,.0f}")
+
+    mortgage_balance = st.number_input("🏦 Mortgage Left", min_value=0, step=1000)
+    st.caption(f"💬 You entered: £{mortgage_balance:,.0f}")
 
 with col2:
-    debts_and_fees = st.number_input("💳 Debts & Legal Fees (£)", min_value=0, step=1000, help="Total of debts, conveyancing fees, stamp duty etc.")
-    deposit_amount = st.number_input("💰 Deposit for New House (£)", min_value=0, step=1000, help="Deposit you're putting down on the next house")
+    debts_and_fees = st.number_input("💳 Debts & Legal Fees", min_value=0, step=1000)
+    st.caption(f"💬 You entered: £{debts_and_fees:,.0f}")
+
+    deposit_amount = st.number_input("💰 Deposit for New House", min_value=0, step=1000)
+    st.caption(f"💬 You entered: £{deposit_amount:,.0f}")
 
 # Only run calculations if all values are filled
 if all(x > 0 for x in [sale_price, mortgage_balance, debts_and_fees, deposit_amount]):
