@@ -10,10 +10,21 @@ st.write("Easily calculate your equity, debts, and remaining cash after buying y
 # Inputs
 st.header("Enter Your Details:")
 
-sale_price = st.number_input("🏷️ House Sale Price (£)", value=475000, step=1000, format="%i")
-mortgage_balance = st.number_input("🏦 Remaining Mortgage (£)", value=298000, step=1000, format="%i")
-debts_and_fees = st.number_input("💳 Debts + Fees (£)", value=56000, step=1000, format="%i")
-deposit_amount = st.number_input("💰 Deposit for New House (£)", value=80000, step=1000, format="%i")
+# Sale Price
+sale_price = st.number_input("🏷️ House Sale Price (£)", value=475000, step=1000)
+st.caption(f"Formatted: £{sale_price:,.0f}")
+
+# Mortgage
+mortgage_balance = st.number_input("🏦 Remaining Mortgage (£)", value=298000, step=1000)
+st.caption(f"Formatted: £{mortgage_balance:,.0f}")
+
+# Debts and Fees
+debts_and_fees = st.number_input("💳 Debts + Fees (£)", value=56000, step=1000)
+st.caption(f"Formatted: £{debts_and_fees:,.0f}")
+
+# Deposit
+deposit_amount = st.number_input("💰 Deposit for New House (£)", value=80000, step=1000)
+st.caption(f"Formatted: £{deposit_amount:,.0f}")
 
 # Calculations
 equity = sale_price - mortgage_balance
