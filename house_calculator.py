@@ -63,6 +63,17 @@ with colB:
     for label, value in list(results.items())[4:]:
         st.markdown(f"**{label}:** {value}")
 
+# MARTA's Mood — Always Visible
+st.markdown("---")
+st.header("🧠 MARTA's Mood")
+
+if remaining_cash > 15000:
+    st.markdown("### 😊 MARTA is happy — you're well set!")
+elif 0 <= remaining_cash <= 15000:
+    st.markdown("### 😐 MARTA is not impressed — cutting it a bit close.")
+else:
+    st.markdown("### 😠 MARTA is angry — there’s not enough money after the deposit!")
+
 # Excel download function
 def to_excel(data_dict):
     df = pd.DataFrame(data_dict.items(), columns=["Item", "Amount"])
@@ -80,17 +91,6 @@ st.download_button(
     file_name="ross_marta_house_calculator.xlsx",
     mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
 )
-
-# MARTA's Mood — Always Visible
-st.markdown("---")
-st.header("🧠 MARTA's Mood")
-
-if remaining_cash > 15000:
-    st.markdown("### 😊 MARTA is happy — you're well set!")
-elif 0 <= remaining_cash <= 15000:
-    st.markdown("### 😐 MARTA is not impressed — cutting it a bit close.")
-else:
-    st.markdown("### 😠 MARTA is angry — there’s not enough money after the deposit!")
 
 # Footer
 st.markdown("---")
