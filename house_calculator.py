@@ -35,24 +35,24 @@ st.markdown("""
 st.title("🏡 Ross & Marta Wales Move")
 st.markdown("Easily work out your equity and cash remaining when buying your new home.")
 
-# Input section
 st.header("🔢 Enter Your Details")
 
 col1, col2 = st.columns(2)
 
 with col1:
-    sale_price = st.number_input("🏷️ Sale Price", min_value=0, step=1000)
+    sale_price = st.number_input("🏷️ Sale Price", min_value=0, step=1000, format="%d")
     st.caption(f"💬 You entered: £{sale_price:,.0f}")
 
-    mortgage_balance = st.number_input("🏦 Mortgage Left", min_value=0, step=1000)
+    mortgage_balance = st.number_input("🏦 Mortgage Left", min_value=0, step=1000, format="%d")
     st.caption(f"💬 You entered: £{mortgage_balance:,.0f}")
 
 with col2:
-    debts_and_fees = st.number_input("💳 Debts & Legal Fees", min_value=0, step=1000)
+    debts_and_fees = st.number_input("💳 Debts & Legal Fees", min_value=0, step=1000, format="%d")
     st.caption(f"💬 You entered: £{debts_and_fees:,.0f}")
 
-    deposit_amount = st.number_input("💰 Deposit for New House", min_value=0, step=1000)
+    deposit_amount = st.number_input("💰 Deposit for New House", min_value=0, step=1000, format="%d")
     st.caption(f"💬 You entered: £{deposit_amount:,.0f}")
+
 
 # Only run calculations if all values are filled
 if all(x > 0 for x in [sale_price, mortgage_balance, debts_and_fees, deposit_amount]):
