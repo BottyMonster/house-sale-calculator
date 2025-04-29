@@ -5,31 +5,31 @@ st.set_page_config(page_title="House Sale Calculator", page_icon="🏡", layout=
 
 # Main Title
 st.title("🏡 House Sale and Purchase Calculator")
-st.write("Easily calculate your equity, debts, and remaining cash after buying your new home!")
+st.write("Instantly see your house sale, mortgage payoff, and cash position!")
 
-# Inputs
-st.header("Enter Your Details:")
+# Inputs grouped in two columns
+colA, colB = st.columns(2)
 
-# Sale Price
-sale_price = st.number_input("🏷️ House Sale Price (£)", value=475000, step=1000)
-st.caption(f"Formatted: £{sale_price:,.0f}")
+with colA:
+    sale_price = st.number_input("🏷️ House Sale Price (£)", value=475000, step=1000)
+    st.caption(f"💬 Sale Price: **£{sale_price:,.0f}**")
 
-# Mortgage
-mortgage_balance = st.number_input("🏦 Remaining Mortgage (£)", value=298000, step=1000)
-st.caption(f"Formatted: £{mortgage_balance:,.0f}")
+    debts_and_fees = st.number_input("💳 Debts + Fees (£)", value=56000, step=1000)
+    st.caption(f"💬 Debts & Fees: **£{debts_and_fees:,.0f}**")
 
-# Debts and Fees
-debts_and_fees = st.number_input("💳 Debts + Fees (£)", value=56000, step=1000)
-st.caption(f"Formatted: £{debts_and_fees:,.0f}")
+with colB:
+    mortgage_balance = st.number_input("🏦 Remaining Mortgage (£)", value=298000, step=1000)
+    st.caption(f"💬 Mortgage: **£{mortgage_balance:,.0f}**")
 
-# Deposit
-deposit_amount = st.number_input("💰 Deposit for New House (£)", value=80000, step=1000)
-st.caption(f"Formatted: £{deposit_amount:,.0f}")
+    deposit_amount = st.number_input("💰 Deposit for New House (£)", value=80000, step=1000)
+    st.caption(f"💬 Deposit: **£{deposit_amount:,.0f}**")
 
-# Calculations
+# Live Calculations
 equity = sale_price - mortgage_balance
 after_debts = equity - debts_and_fees
 remaining_cash = after_debts - deposit_amount
+
+st.divider()
 
 # Results
 st.header("Results 📊")
@@ -45,10 +45,9 @@ with col2:
 with col3:
     st.metric(label="Cash Remaining after Deposit", value=f"£{remaining_cash:,.0f}")
 
-# Warning if cash negative
 if remaining_cash < 0:
-    st.error("⚠️ Warning: You do not have enough funds after paying the deposit!")
+    st.error("⚠️ You do not have enough funds after deposit!")
 
-# Footer
 st.markdown("---")
 st.caption("Created with ❤️ by [Your Name or Company]")
+
