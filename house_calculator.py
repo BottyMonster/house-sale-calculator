@@ -7,13 +7,13 @@ st.set_page_config(page_title="House Sale Calculator", page_icon="🏡", layout=
 st.title("🏡 House Sale and Purchase Calculator")
 st.write("Easily calculate your equity, debts, and remaining cash after buying your new home!")
 
-# Inputs - nicely spaced
+# Inputs
 st.header("Enter Your Details:")
 
-sale_price = st.number_input("🏷️ House Sale Price (£)", value=475000, step=1000)
-mortgage_balance = st.number_input("🏦 Remaining Mortgage (£)", value=298000, step=1000)
-debts_and_fees = st.number_input("💳 Debts + Fees (£)", value=56000, step=1000)
-deposit_amount = st.number_input("💰 Deposit for New House (£)", value=80000, step=1000)
+sale_price = st.number_input("🏷️ House Sale Price (£)", value=475000, step=1000, format="%i")
+mortgage_balance = st.number_input("🏦 Remaining Mortgage (£)", value=298000, step=1000, format="%i")
+debts_and_fees = st.number_input("💳 Debts + Fees (£)", value=56000, step=1000, format="%i")
+deposit_amount = st.number_input("💰 Deposit for New House (£)", value=80000, step=1000, format="%i")
 
 # Calculations
 equity = sale_price - mortgage_balance
@@ -22,8 +22,22 @@ remaining_cash = after_debts - deposit_amount
 
 # Results
 st.header("Results 📊")
-st.success(f"**Equity after Mortgage:** £{equity:,.0f}")
-st.success(f"**Equity after Debts & Fees:** £{after_debts:,.0f}")
-st.success(f"**Cash Remaining after Deposit:** £{remaining_cash:,.0f}")
 
-# Warning if cash
+col1, col2, col3 = st.columns(3)
+
+with col1:
+    st.metric(label="Equity after Mortgage", value=f"£{equity:,.0f}")
+
+with col2:
+    st.metric(label="Equity after Debts & Fees", value=f"£{after_debts:,.0f}")
+
+with col3:
+    st.metric(label="Cash Remaining after Deposit", value=f"£{remaining_cash:,.0f}")
+
+# Warning if cash negative
+if remaining_cash < 0:
+    st.error("⚠️ Warning: You do not have enough funds after paying the deposit!")
+
+# Footer
+st.markdown("---")
+st.caption("Created with ❤️ by [Your Name or Company]")
