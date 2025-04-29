@@ -81,16 +81,18 @@ st.download_button(
     mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
 )
 
-# MARTA's mood
-st.markdown("### 🧠 MARTA's Mood:")
+# MARTA's Mood — Always Visible
+st.markdown("---")
+st.header("🧠 MARTA's Mood")
 
 if remaining_cash > 15000:
-    st.success("😊 MARTA is happy — you’re well set!")
+    st.markdown("### 😊 MARTA is happy — you're well set!")
 elif 0 <= remaining_cash <= 15000:
-    st.warning("😐 MARTA is not impressed — cutting it a bit close.")
+    st.markdown("### 😐 MARTA is not impressed — cutting it a bit close.")
 else:
-    st.error("😠 MARTA is angry — there’s not enough money after the deposit!")
+    st.markdown("### 😠 MARTA is angry — there’s not enough money after the deposit!")
 
 # Footer
 st.markdown("---")
 st.caption("Made with ❤️ for Ross & Marta by ChatGPT + Streamlit")
+
