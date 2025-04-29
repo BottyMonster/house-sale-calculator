@@ -105,16 +105,16 @@ if all(x > 0 for x in [sale_price, mortgage_balance, debts_and_fees, deposit_amo
         for label, value in list(results.items())[4:]:
             st.markdown(f"**{label}:** {value}")
 
-    # MARTA's Mood
-    st.markdown("---")
-    st.header("🧠 MARTA's Mood")
+    # MARTA's Mood (Centered)
+st.markdown("---")
+st.markdown("<h2 style='text-align: center;'>🧠 MARTA's Mood</h2>", unsafe_allow_html=True)
 
-    if remaining_cash > 15000:
-        st.markdown("### 😊 MARTA is happy — you're well set!")
-    elif 0 <= remaining_cash <= 15000:
-        st.markdown("### 😐 MARTA is not impressed — cutting it a bit close.")
-    else:
-        st.markdown("### 😠 MARTA is angry — there’s not enough money after the deposit!")
+if remaining_cash > 15000:
+    st.markdown("<h3 style='text-align: center;'>😊 MARTA is happy — you're well set!</h3>", unsafe_allow_html=True)
+elif 0 <= remaining_cash <= 15000:
+    st.markdown("<h3 style='text-align: center;'>😐 MARTA is not impressed — cutting it a bit close.</h3>", unsafe_allow_html=True)
+else:
+    st.markdown("<h3 style='text-align: center;'>😠 MARTA is angry — there’s not enough money after the deposit!</h3>", unsafe_allow_html=True)
 
 # Footer
 st.markdown("---")
