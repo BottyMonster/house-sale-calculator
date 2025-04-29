@@ -5,18 +5,18 @@ from io import BytesIO
 # Page settings
 st.set_page_config(page_title="Ross & Marta Wales Move", page_icon="🏡", layout="centered")
 
-# 🌌 Add dark background styling
+# 🏞️ Wales photo with dark overlay
 st.markdown("""
     <style>
         body {
-            background-image: url('https://images.unsplash.com/photo-1607083203023-8ef4e4411dfb?auto=format&fit=crop&w=1400&q=80');
+            background-image: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1610394214304-f978ec6dfe8a?auto=format&fit=crop&w=1400&q=80');
             background-size: cover;
             background-attachment: fixed;
             background-repeat: no-repeat;
             background-position: center;
         }
         .stApp {
-            background-color: rgba(0, 0, 0, 0.75);  /* Dark overlay */
+            background-color: rgba(0, 0, 0, 0.75);
             color: white;
             padding: 2rem;
             border-radius: 10px;
@@ -106,4 +106,3 @@ if all(x > 0 for x in [sale_price, mortgage_balance, debts_and_fees, deposit_amo
 # Footer
 st.markdown("---")
 st.caption("Made with ❤️ for Marta by Ross")
-
