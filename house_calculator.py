@@ -44,7 +44,7 @@ def parse_currency_input(label):
     else:
         return 0
 
-st.header("🔢 Enter Your Details")
+st.header("🔢 Enter the moolars")
 
 col1, col2 = st.columns(2)
 
