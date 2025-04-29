@@ -76,6 +76,6 @@ else:
 
 # Footer
 st.markdown("---")
-st.caption("Made with ❤️ for Ross & Marta by ChatGPT + Streamlit")
+st.caption("Made with ❤️ for Marta by Ross")
 
 
